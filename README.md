@@ -1,4 +1,4 @@
 # nestjs-react-test-app
 
 ## Description
-This app is NestJS and React Test App.
+This is NestJs and React sample code for learning.

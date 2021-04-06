@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { RecoilRoot } from 'recoil';
 
-function App() {
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RecoilPage from './pages/RecoilPage';
+import SignUpPage from './pages/SignUpPage';
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <RecoilRoot>
+          <Route path="/" component={HomePage} exact />
+          <Route path="/user/signup" component={SignUpPage} exact />
+          <Route path="/user/login" component={LoginPage} exact />
+          <Route path="/recoil" component={RecoilPage} exact />
+        </RecoilRoot>
+      </Switch>
+    </Router>
   );
 }
+
 
 export default App;
