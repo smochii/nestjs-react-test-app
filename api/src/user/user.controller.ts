@@ -3,7 +3,6 @@ import { Response } from 'express';
 import { AuthenticationDto } from './dto/authentication.dto';
 import { SignupDto } from './dto/signup.dto';
 import { UserService } from './user.service';
-import validator from 'validator';
 import { InsertResult } from 'typeorm';
 
 @Controller('user')

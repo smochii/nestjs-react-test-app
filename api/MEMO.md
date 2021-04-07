@@ -1,7 +1,7 @@
 # MEMO
 develop memo.
 
-## migratiion
+## migration
 ```
 yarn run build
 yarn run to:g "migration-name"

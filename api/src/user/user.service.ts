@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '../entities/User';
 import { AuthenticationDto } from './dto/authentication.dto';
 import { SignupDto } from './dto/signup.dto';
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -33,7 +33,7 @@ export class UserService {
    */
   public async signup(signupDto: SignupDto) {
     // do hash
-    const hashedPassword = await bcrypt.hash(signupDto.password, 4);
+    const hashedPassword = await bcrypt.hash(signupDto.password, 10);
 
     // create new user
     const newUser = new User();
