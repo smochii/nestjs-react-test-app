@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, Unique } from 'typeorm';
 import { Note } from './Note';
 
 @Entity()
+@Unique(['username'])
 export class User {
     @PrimaryGeneratedColumn()
     readonly id: number;

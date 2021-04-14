@@ -40,7 +40,7 @@ const LoginFormOrganisms: React.FC = () => {
       password: password
     }
 
-    axios.post('/api/user/authentication', params)
+    axios.post(`${process.env.REACT_APP_API_URL}/user/authentication`, params)
     .then(res => {
       setMessage('successful authentication.');
       setSeverity('success');

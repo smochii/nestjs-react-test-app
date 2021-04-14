@@ -6,6 +6,7 @@ import axios from "axios";
 import PasswordInputAtom from "../atoms/PasswordInputAtom";
 import UsernameInputAtom from "../atoms/UsernameInputAtom";
 import { usernameInputState, passwordInputState } from '../../states/InputState';
+import { SignupDto } from '../../../../api/src/user/dto/signup.dto';
 
 const useStyles = makeStyles({
   paper: {
@@ -35,33 +36,30 @@ const SignUpFormOrganisms: React.FC = () => {
   const setSeverity = useSetRecoilState(snackBarSeverityState);
 
   const submit = () => {
-    const params = {
+    const params: SignupDto = {
       username: username,
       password: password
     }
 
-    axios.post('/api/user/signup', params)
+    axios.post(`${process.env.REACT_APP_API_URL}/user/signup`, params)
     .then(res => {
       let status = res.status;
       if (status === 201) {
-        setMessage('signup success');
+        setMessage('registration was successful');
         setSeverity('success');
         setOpen(true);
       }
     })
     .catch(e => {
       let status = e.response.status;
-      switch(status) {
-        case 409:
-          setMessage('username is already registered.');
-          setSeverity('error');
-          setOpen(true);
-          break;
-        default:
-          setMessage('unexpected error.');
-          setSeverity('error');
-          setOpen(true);
-          break;
+      if (status === 409) {
+        setMessage('username is already registered.');
+        setSeverity('error');
+        setOpen(true);
+      } else {
+        setMessage('unexpected error.');
+        setSeverity('error');
+        setOpen(true);
       }
     });
   }

@@ -1,6 +1,6 @@
-# nestjs-react-test-app
-<font color="tomato">※作成中なのでソースめっちゃ汚いです</font>
+# study-app-nestjs-react
+*This is still incomplete.
 
 ## Description
-This is NestJs and React sample code for learning.
+NestJs and React sample code for study.
 

@@ -4,10 +4,25 @@ import { AuthenticationDto } from './dto/authentication.dto';
 import { SignupDto } from './dto/signup.dto';
 import { UserService } from './user.service';
 import { InsertResult } from 'typeorm';
+import { FindUserDto } from './dto/findUser.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly service: UserService) {
+  }
+
+  /**
+   * find user
+   * @param res 
+   * @param findUserDto 
+   * @returns 
+   */
+  async findUser(@Res() res: Response, @Body() findUserDto: FindUserDto) {
+    const user = await this.service.findUser(findUserDto.username);
+    if (user) {
+      return res.status(HttpStatus.CONFLICT).send();
+    }
+    return res.status(HttpStatus.OK).send();
   }
 
   /**
@@ -18,14 +33,19 @@ export class UserController {
   @Post('signup')
   async signup(@Res() res: Response, @Body() signupDto: SignupDto) {
     // find user
-    const user = await this.service.findUser(signupDto.username);
-    if (user) {
-      return res.status(HttpStatus.CONFLICT).send();
-    }
+    // const user = await this.service.findUser(signupDto.username);
+    // if (user) {
+    //   return res.status(HttpStatus.CONFLICT).send();
+    // }
     
     // signup
-    const result: InsertResult = await this.service.signup(signupDto);
-    return res.status(HttpStatus.CREATED).send();
+    try {
+      const result: InsertResult = await this.service.signup(signupDto);
+      console.info(result);
+      return res.status(HttpStatus.CREATED).send();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   /**
