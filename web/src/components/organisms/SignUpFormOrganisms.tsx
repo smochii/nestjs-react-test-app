@@ -6,7 +6,7 @@ import axios from "axios";
 import PasswordInputAtom from "../atoms/PasswordInputAtom";
 import UsernameInputAtom from "../atoms/UsernameInputAtom";
 import { usernameInputState, passwordInputState } from '../../states/InputState';
-import { SignupDto } from '../../../../api/src/user/dto/signup.dto';
+import UsernameCheckInputAtom from "../atoms/UsernameCheckInputAtom";
 
 const useStyles = makeStyles({
   paper: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 const SignUpFormOrganisms: React.FC = () => {
   const classes = useStyles();
-  const username = useRecoilValue(usernameInputState);
+  const state = useRecoilValue(usernameInputState);
   const password = useRecoilValue(passwordInputState);
 
   const setOpen = useSetRecoilState(snackBarOpenState);
@@ -36,8 +36,8 @@ const SignUpFormOrganisms: React.FC = () => {
   const setSeverity = useSetRecoilState(snackBarSeverityState);
 
   const submit = () => {
-    const params: SignupDto = {
-      username: username,
+    const params = {
+      username: state.value,
       password: password
     }
 
@@ -73,7 +73,7 @@ const SignUpFormOrganisms: React.FC = () => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <UsernameInputAtom />
+        <UsernameCheckInputAtom />
       </Grid>
       <Grid item xs={12}>
         <PasswordInputAtom/>

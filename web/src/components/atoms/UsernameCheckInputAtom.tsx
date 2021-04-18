@@ -3,37 +3,46 @@ import { TextField } from "@material-ui/core";
 import { useRecoilState } from "recoil";
 import { usernameInputState } from '../../states/InputState';
 import axios from "axios";
-import { FindUserDto } from '../../../../api/src/user/dto/findUser.dto';
 
 const UsernameCheckInputAtom: React.FC = () => {
-  const [username, setUsername] = useRecoilState(usernameInputState);
+  const [state, setState] = useRecoilState(usernameInputState);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
+    setState({value: event.target.value});
   };
 
   const onBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    const params: FindUserDto = {
-      username: username
+    if (!state.value) {
+      return;
     }
 
-    axios.post(`${process.env.REACT_APP_API_URL}/user/signup`, params)
+    const params = {
+      username: state.value
+    }
+
+    axios.post(`${process.env.REACT_APP_API_URL}/user/find`, params)
     .then(res => {
       let status = res.status;
-      if (status === 201) {
-        // TODO
+      if (status === 200) {
+        setState({
+          helperText: '',
+          isError: false,
+        });
       }
     })
     .catch(e => {
       let status = e.response.status;
       if (status === 409) {
-        // TODO
+        setState({
+          helperText: 'username is already registered',
+          isError: true,
+        });
       }
     });
   };
 
   return (
-    <TextField value={username} onChange={onChange} onBlur={onBlur} label="Username" fullWidth />
+    <TextField error={state.isError} helperText={state.helperText} value={state.value} onChange={onChange} onBlur={onBlur} label='Username' fullWidth />
   );
 }
 

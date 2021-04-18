@@ -1,8 +1,14 @@
 import { atom } from "recoil";
 
-export const usernameInputState = atom({
+interface usernameInputProps {
+  value?: string;
+  helperText?: string;
+  isError?: boolean;
+}
+
+export const usernameInputState = atom<usernameInputProps>({
   key: 'usernameInputState',
-  default: '',
+  default: {},
 });
 
 export const passwordInputState = atom({

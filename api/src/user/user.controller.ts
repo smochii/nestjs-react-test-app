@@ -17,6 +17,7 @@ export class UserController {
    * @param findUserDto 
    * @returns 
    */
+   @Post('find')
   async findUser(@Res() res: Response, @Body() findUserDto: FindUserDto) {
     const user = await this.service.findUser(findUserDto.username);
     if (user) {

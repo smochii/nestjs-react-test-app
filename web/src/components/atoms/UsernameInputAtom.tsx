@@ -4,14 +4,14 @@ import { useRecoilState } from "recoil";
 import { usernameInputState } from '../../states/InputState';
 
 const UsernameInputAtom: React.FC = () => {
-  const [username, setUsername] = useRecoilState(usernameInputState);
+  const [state, setState] = useRecoilState(usernameInputState);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
+    setState({...state, value: event.target.value});
   };
 
   return (
-    <TextField value={username} onChange={onChange} label="Username" fullWidth />
+    <TextField value={state.value} onChange={onChange} label="Username" fullWidth />
   );
 }
 
